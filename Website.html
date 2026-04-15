@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StyleNest - Premium Fashion Store</title>
+  <meta name="description" content="StyleNest - Discover curated collections of premium fashion essentials for men and women.">
+  <link rel="stylesheet" href="Website.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <div class="nav-left">
+      <button class="hamburger" id="hamburgerBtn">&#9776;</button>
+      <a href="#" class="logo">StyleNest<span>.</span></a>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#" data-filter="all">All Products</a></li>
+      <li><a href="#" data-filter="men">Men</a></li>
+      <li><a href="#" data-filter="women">Women</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="search-box" id="searchBox">
+        <input type="text" id="searchInput" placeholder="Search products...">
+        <button class="search-toggle" id="searchToggle">&#128269;</button>
+      </div>
+      <button class="icon-btn" id="cartBtn">
+        &#128722;
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#" data-filter="all">All Products</a>
+    <a href="#" data-filter="men">Men</a>
+    <a href="#" data-filter="women">Women</a>
+  </div>
+</nav>
+
+
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <span class="hero-tag">&#128293; Trending Now</span>
+    <h1>Elevate Your Style</h1>
+    <p>Discover curated collections of premium fashion essentials.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" id="shopNowBtn">Shop Now</button>
+      <button class="btn-outline" id="viewCollectionBtn">View Collection</button>
+    </div>
+  </div>
+</section>
+
+<section class="filters" id="filters">
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="men">&#128084; Men</button>
+  <button class="filter-btn" data-filter="women">&#128087; Women</button>
+</section>
+
+
+<section class="catalog" id="catalog">
+  <div class="catalog-header">
+    <h2 id="catalogTitle">Featured Products</h2>
+    <p id="productCount"></p>
+  </div>
+  <div class="product-grid" id="productGrid"></div>
+  <div class="no-results" id="noResults" style="display:none;">
+    <p>&#128270;</p>
+    <h3>No products found</h3>
+    <p>Try a different filter or search term</p>
+  </div>
+</section>
+
+
+<div class="modal-overlay" id="productModal">
+  <div class="modal-content product-detail">
+    <button class="modal-close" id="closeProductModal">&times;</button>
+    <div class="detail-grid">
+      <div class="detail-image">
+        <img id="detailImg" src="" alt="">
+      </div>
+      <div class="detail-info">
+        <span class="detail-category" id="detailCategory"></span>
+        <h2 id="detailName"></h2>
+        <div class="detail-price">
+          <span class="current-price" id="detailPrice"></span>
+          <span class="original-price" id="detailOriginal"></span>
+          <span class="discount-badge" id="detailDiscount"></span>
+        </div>
+        <p class="detail-desc" id="detailDesc"></p>
+        <div class="detail-section">
+          <h4>Size</h4>
+          <div class="size-options" id="sizeOptions"></div>
+        </div>
+        <div class="detail-section">
+          <h4>Color</h4>
+          <div class="color-options" id="colorOptions"></div>
+        </div>
+        <div class="detail-section">
+          <h4>Quantity</h4>
+          <div class="qty-control">
+            <button id="qtyMinus">-</button>
+            <span id="qtyValue">1</span>
+            <button id="qtyPlus">+</button>
+          </div>
+        </div>
+        <button class="btn-primary add-to-cart-btn" id="addToCartBtn" disabled>Select size & color first</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h3>Shopping Cart</h3>
+    <button class="modal-close" id="closeCart">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">$0.00</span>
+    </div>
+    <button class="btn-primary" id="checkoutBtn" style="width:100%">Proceed to Checkout</button>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal-content checkout-content">
+    <button class="modal-close" id="closeCheckout">&times;</button>
+    
+    <div class="checkout-step" id="step1">
+      <h2>Shipping Address</h2>
+      <div class="checkout-form">
+        <input type="text" id="fullName" placeholder="Full Name" required>
+        <input type="text" id="phone" placeholder="Phone Number" required>
+        <input type="text" id="address" placeholder="Street Address" required>
+        <div class="form-row">
+          <input type="text" id="city" placeholder="City" required>
+          <input type="text" id="state" placeholder="State" required>
+        </div>
+        <input type="text" id="pincode" placeholder="PIN Code" required>
+        <button class="btn-primary" id="toPaymentBtn" style="width:100%;margin-top:16px">Continue to Payment</button>
+      </div>
+    </div>
+    
+    <div class="checkout-step" id="step2" style="display:none;">
+      <h2>Payment Method</h2>
+      <div class="payment-options">
+        <label class="payment-option">
+          <input type="radio" name="payment" value="upi"> UPI (GPay / PhonePe / Paytm)
+        </label>
+        <div class="upi-field" id="upiField" style="display:none;">
+          <input type="text" id="upiId" placeholder="Enter UPI ID (e.g. name@upi)">
+        </div>
+        <label class="payment-option">
+          <input type="radio" name="payment" value="card"> Credit / Debit Card
+        </label>
+        <div class="card-fields" id="cardFields" style="display:none;">
+          <input type="text" id="cardNumber" placeholder="Card Number">
+          <div class="form-row">
+            <input type="text" id="cardExpiry" placeholder="MM/YY">
+            <input type="text" id="cardCvv" placeholder="CVV">
+          </div>
+        </div>
+        <label class="payment-option">
+          <input type="radio" name="payment" value="netbanking"> Net Banking
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="payment" value="cod"> Cash on Delivery
+        </label>
+      </div>
+      <div class="checkout-summary">
+        <div><span>Subtotal</span><span id="checkoutSubtotal">$0</span></div>
+        <div><span>Shipping</span><span>Free</span></div>
+        <div class="summary-total"><span>Total</span><span id="checkoutTotal">$0</span></div>
+      </div>
+      <button class="btn-primary" id="placeOrderBtn" style="width:100%;margin-top:16px" disabled>Select a payment method</button>
+    </div>
+    
+    <div class="checkout-step" id="step3" style="display:none;">
+      <div class="confirmation">
+        <div class="confirm-icon">&#10004;</div>
+        <h2>Order Confirmed!</h2>
+        <p>Your order has been placed successfully.</p>
+        <p class="order-id" id="orderId"></p>
+        <button class="btn-primary" id="continueShopping" style="margin-top:24px">Continue Shopping</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-overlay" id="infoModal">
+  <div class="modal-content info-content">
+    <button class="modal-close" id="closeInfoModal">&times;</button>
+    <h2 id="infoModalTitle"></h2>
+    <div id="infoModalBody"></div>
+  </div>
+</div>
+
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <h3 class="footer-logo">StyleNest<span>.</span></h3>
+      <p>Premium fashion essentials curated for the modern individual.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <a href="#" class="footer-link" data-filter="all">All Products</a>
+      <a href="#" class="footer-link" data-filter="men">Men</a>
+      <a href="#" class="footer-link" data-filter="women">Women</a>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <a href="#" class="footer-help-link" data-page="faq">FAQ</a>
+      <a href="#" class="footer-help-link" data-page="shipping">Shipping</a>
+      <a href="#" class="footer-help-link" data-page="returns">Returns</a>
+      <a href="#" class="footer-help-link" data-page="contact">Contact</a>
+    </div>
+    <div>
+      <h4>Follow Us</h4>
+      <div class="social-links">
+        <a href="https://instagram.com" target="_blank">
+          <i class="fab fa-instagram"></i>
+        </a>
+            <a href="https://x.com" target="_blank">
+              <i class="fab fa-x-twitter"></i>
+            </a>
+              <a href="https://facebook.com" target="_blank">
+          <i class="fab fa-facebook-f"></i>
+              </a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 StyleNest. All rights reserved.</div>
+</footer>
+
+<script src="Website.js"></script>
+</body>
+</html>
