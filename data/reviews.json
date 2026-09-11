@@ -1,0 +1,50 @@
+[
+  {
+    "id": 6,
+    "productId": 1,
+    "name": "Automated Tester",
+    "rating": 5,
+    "comment": "Full-stack testing comment for StyleNest high tops.",
+    "date": "2026-09-11"
+  },
+  {
+    "id": 1,
+    "productId": 1,
+    "name": "Jessica R.",
+    "rating": 5,
+    "date": "2026-03-01",
+    "comment": "Exceptional quality and fit! The LED lights are vibrant and the battery lasts surprisingly long."
+  },
+  {
+    "id": 2,
+    "productId": 1,
+    "name": "Michael T.",
+    "rating": 5,
+    "date": "2026-03-05",
+    "comment": "Looks even sharper in person than online. Super comfortable for walking around all evening."
+  },
+  {
+    "id": 3,
+    "productId": 2,
+    "name": "Sophia L.",
+    "rating": 4,
+    "date": "2026-02-28",
+    "comment": "Really stylish wardrobe addition. The stripes are bold and fabric is super breathable."
+  },
+  {
+    "id": 4,
+    "productId": 4,
+    "name": "David K.",
+    "rating": 5,
+    "date": "2026-03-08",
+    "comment": "Wore this to a gala and got compliments all night. Fits tailored out of the box."
+  },
+  {
+    "id": 5,
+    "productId": 15,
+    "name": "Elena V.",
+    "rating": 5,
+    "date": "2026-03-09",
+    "comment": "Genuine leather aroma and buttery soft texture. Worth every single penny."
+  }
+]

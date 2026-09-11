@@ -3,5 +3,14 @@ Website.html
 Website.css
 Website.js
 README.md
+server.js
+backend/
+data/
+test/
+admin.html
+package.json
+package-lock.json
+node_modules/
+.env*
 .git*
 .github/

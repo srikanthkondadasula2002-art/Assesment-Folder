@@ -1,33 +1,49 @@
-# StyleNest - E-Commerce Storefront & Shopify Online Store 2.0 Theme
+# StyleNest - Full-Stack Luxury Fashion E-Commerce Platform & Shopify OS 2.0 Theme
 
-This project is developed as part of an assessment task. It involves creating a responsive, interactive static e-commerce website (**StyleNest**) using HTML5, CSS3, and Vanilla JavaScript, and converting it into a full **Shopify Online Store 2.0** compatible theme structure.
+StyleNest is a production-ready, full-stack luxury fashion e-commerce platform built with a high-performance **Node.js / Express.js REST API**, zero-setup persistent database layer, rich glassmorphic storefront, interactive store administrator portal, and full compatibility with **Shopify Online Store 2.0**.
 
 ---
 
-## 🚀 Key Highlights
+## 🌟 Key Features & Capabilities
 
-- **Dual-Mode Project**:
-  1. **Standalone Web Storefront** (`Website.html`, `Website.css`, `Website.js`): Pure vanilla web application with zero external framework dependencies.
-  2. **Shopify Online Store 2.0 Theme**: Modular Liquid architecture with sections, blocks, JSON templates, and theme editor settings schema based on Shopify's modern theme standards.
-- **Dark Mode Design System**: Premium `#0f172a` slate aesthetics with glassmorphic sticky navigation, vibrant accents, and smooth micro-animations.
-- **Product Catalog & Live Filtering**: Real-time category filtering (Men, Women, All) and live text search across 20 curated fashion essentials.
-- **Interactive Quick View Modal**: Dynamic product view with size selector, color swatches, quantity incrementer, and add-to-cart validation.
-- **Slide-Over Shopping Cart**: Side drawer with item badges, quantity increment/decrement, item removal, live subtotal computation, and **localStorage persistence**.
-- **Multi-Step Checkout Simulation**: Form validation across Shipping Address, Payment Methods (UPI, Credit/Debit Card, Net Banking, COD), and Order Confirmation with unique Order IDs.
-- **Shopify Liquid Sections**:
-  - `sections/stylenest-hero.liquid`: Customizable hero banner with merchant schema controls.
-  - `sections/stylenest-catalog.liquid`: Dynamic product grid looping over Shopify collections with category filters and fallback catalog support.
-  - `assets/stylenest.css`: Reusable dark-mode styling loaded directly through `snippets/stylesheets.liquid`.
+### 1. Full-Stack REST API & Persistent Database
+- **Zero-Setup Database Layer**: Embedded data engine in `data/` managing products, stock balances, verified customer reviews, promo discount vouchers, and order records out of the box with zero external database configuration.
+- **RESTful Endpoints**: Full CRUD operations for product filtering, searching, server-side voucher validation, authenticated order processing, and telemetry metrics.
+- **Order Tracking & Fulfillment**: Automated order generation (`ORD-XXXX`), stock depletion, delivery status progression (`Processing`, `Shipped`, `Delivered`, `Cancelled`), and receipt generation.
+
+### 2. Store Administrator & Analytics Portal (`/admin`)
+- Accessible at `http://localhost:5000/admin`.
+- **Live KPI Dashboard**: Instant telemetry on gross revenue, orders processed, catalog stock status, and customer sentiment scores.
+- **Orders Management**: Live order fulfillment table with real-time status update selectors (`Processing` &rarr; `Shipped` &rarr; `Delivered`).
+- **Inventory Control**: Live stock manager with instant stock balance adjustment and low-stock warning alerts.
+- **Reviews Moderation**: Real-time customer review log with star ratings and feedback inspection.
+
+### 3. Flagship Customer Storefront (`/`)
+- **Theme Switcher**: Smooth Dark Slate (`#0b0f19`) and Luxury Light mode toggle with persistent preferences.
+- **Dynamic Catalog & Filtering**: 20 luxury fashion products across Men and Women categories with real-time text search.
+- **Slide-Over Wishlist**: Dedicated side drawer with item counts and quick-add actions.
+- **Server-Verified Promo Engine**: Apply codes like `STYLENEST20` (20% off), `SAVE10` ($10 off), and `VIP50` (50% off) with live price recalculation.
+- **Multi-Step Checkout**: Complete shipping address verification, payment method selection (UPI, Credit/Debit Card, Net Banking, COD), and immediate order generation.
+- **Customer Order Tracking**: "My Orders" modal to track past purchases and shipment statuses in real time.
+- **Verified Customer Reviews**: 5-star interactive rating form submitting directly to the backend database.
+
+### 4. Shopify Online Store 2.0 Architecture
+- Retains complete compatibility with Shopify Online Store 2.0 guidelines.
+- Custom Liquid sections (`sections/stylenest-hero.liquid`, `sections/stylenest-catalog.liquid`).
+- Clean separation with `.shopifyignore` to exclude backend files during theme synchronization.
 
 ---
 
 ## 🛠️ Technology Stack
 
-- **Frontend**: HTML5, Vanilla CSS3 (Custom Design Tokens, Flexbox, CSS Grid), Vanilla JavaScript (ES6+)
-- **Icons**: FontAwesome 6.5.1
-- **E-Commerce Platform**: Shopify Online Store 2.0
-- **Templating Engine**: Shopify Liquid
-- **Theme Configuration**: Shopify Theme Settings Schema (`config/settings_schema.json`, `templates/*.json`)
+| Layer | Technologies Used |
+| :--- | :--- |
+| **Backend** | Node.js (v20+ / v24+), Express.js 4, CORS, Dotenv |
+| **Database** | Persistent JSON / File-backed data store (`data/`) |
+| **Frontend** | HTML5, Vanilla CSS3 (CSS Variables, Flexbox, Grid), JavaScript ES6+ |
+| **Icons & Fonts** | FontAwesome 6.5.1, Plus Jakarta Sans, Playfair Display |
+| **Shopify Engine** | Shopify Liquid, JSON Templates (`templates/index.json`), Theme Schema |
+| **Testing** | Node.js Native HTTP Test Suite (`test/api.test.js`) |
 
 ---
 
@@ -35,79 +51,105 @@ This project is developed as part of an assessment task. It involves creating a 
 
 ```
 Assesment-Folder/
-├── .shopifyignore                 # Ignores non-theme prototype files during theme sync
-├── README.md                      # Project documentation
-├── Website.html                   # Standalone StyleNest storefront prototype
-├── Website.css                    # Standalone prototype styling
-├── Website.js                     # Standalone client-side data, filtering, cart & checkout logic
-│
-├── assets/                        # Shopify theme assets (images, stylesheets, JS runtime)
-│   ├── stylenest.css              # Custom StyleNest theme stylesheet
-│   ├── base.css                   # Core Shopify theme CSS
-│   └── *.jpg                      # 20 high-res product images
-│
-├── layout/                        # Theme layout shells
-│   ├── theme.liquid               # Master HTML document & asset injector
-│   └── password.liquid            # Password protection layout
-│
-├── sections/                      # Modular Shopify sections
-│   ├── stylenest-hero.liquid      # Custom StyleNest hero section with schema
-│   ├── stylenest-catalog.liquid   # Custom StyleNest product grid & filters
-│   └── ...                        # Additional theme sections (slideshow, marquee, etc.)
-│
-├── blocks/                        # Reusable theme blocks
-├── snippets/                      # Shared Liquid snippets
-│   └── stylesheets.liquid         # Stylesheet loader registering stylenest.css
-│
+├── backend/
+│   ├── db.js                      # Persistent data store controller (products, orders, reviews)
+│   └── routes/
+│       └── api.js                 # REST API endpoints
+├── data/                          # Auto-seeded persistent data files
+│   ├── products.json              # 20 catalog products with stock & pricing
+│   ├── orders.json                # Live customer orders & fulfillment history
+│   └── reviews.json               # Customer reviews and star ratings
+├── test/
+│   └── api.test.js                # Automated end-to-end API test suite
+├── server.js                      # Express application entry point
+├── package.json                   # Dependencies & npm scripts
+├── admin.html                     # Store Administrator & Analytics Portal
+├── Website.html                   # Luxury Storefront Web Application
+├── Website.css                    # Storefront styling & design tokens
+├── Website.js                     # Storefront reactive UI & API connector
+├── assets/                        # Theme assets & 20 high-res fashion images
+├── layout/                        # Shopify theme layout files
+├── sections/                      # Shopify Online Store 2.0 sections
+├── snippets/                      # Liquid snippets
 ├── templates/                     # Shopify JSON templates
-│   └── index.json                 # Home page structure mounting StyleNest sections
-│
-├── config/                        # Theme settings schema (settings_schema.json)
-└── locales/                       # Multi-language translation dictionaries
+├── .shopifyignore                 # Ignores backend files during Shopify CLI sync
+├── .gitignore                     # Ignores node_modules, logs, and env files
+└── README.md                      # Comprehensive documentation
 ```
 
 ---
 
-## 💻 How to Run & Preview
+## 🚀 Quick Start Guide
 
-### 1. Previewing the Standalone Prototype
-Simply open `Website.html` directly in any modern web browser, or serve it locally using any static file server:
-
-```powershell
-# Using Python
-python -m http.server 8000
-
-# Using Node.js (npx)
-npx serve .
-```
-Then visit `http://localhost:8000/Website.html` (or `http://localhost:3000/Website.html`).
-
-### 2. Testing / Deploying the Shopify Theme
-Make sure you have the [Shopify CLI](https://shopify.dev/docs/themes/tools/cli) installed:
-
+### 1. Install Dependencies
 ```bash
-# Check theme structure for any syntax or guideline issues
+npm install
+```
+
+### 2. Start the Full-Stack Server
+```bash
+npm start
+```
+*Development mode with file watching:*
+```bash
+npm run dev
+```
+
+Once running, open your browser:
+- 🛍️ **Storefront:** [http://localhost:5000/](http://localhost:5000/)
+- 📊 **Admin Dashboard:** [http://localhost:5000/admin](http://localhost:5000/admin)
+- 🩺 **API Health Check:** [http://localhost:5000/api/health](http://localhost:5000/api/health)
+
+### 3. Run Automated Tests
+```bash
+npm test
+```
+Executes the automated integration test suite validating all 11 REST API endpoints.
+
+---
+
+## 📡 REST API Reference
+
+| Method | Endpoint | Description |
+| :--- | :--- | :--- |
+| `GET` | `/api/health` | Service uptime and status check |
+| `GET` | `/api/products` | Get products (supports `?category=`, `?search=`, `?sort=`) |
+| `GET` | `/api/products/:id` | Get single product with verified reviews |
+| `GET` | `/api/reviews/:productId` | Get reviews for a specific product |
+| `POST` | `/api/reviews` | Submit a customer review with star rating |
+| `POST` | `/api/promos/validate` | Validate promo voucher code & compute discount |
+| `POST` | `/api/orders` | Place new order, decrement stock, and generate order receipt |
+| `GET` | `/api/orders` | Get order list for tracking & history |
+| `GET` | `/api/orders/:id` | Get details of a single order |
+| `PATCH`| `/api/orders/:id/status` | Update fulfillment state (`Processing`, `Shipped`, `Delivered`) |
+| `GET` | `/api/admin/stats` | Aggregate dashboard KPIs (Revenue, Orders, Low Stock) |
+
+---
+
+## 🏷️ Built-in Promo Vouchers
+
+Test the coupon engine at checkout or in the cart drawer:
+- **`STYLENEST20`** &rarr; 20% OFF entire cart
+- **`SAVE10`** &rarr; $10.00 OFF (minimum purchase $40.00)
+- **`VIP50`** &rarr; 50% VIP exclusive discount
+
+---
+
+## 🛍️ Shopify Online Store 2.0 Integration
+
+To test on a Shopify development store:
+```bash
+# Check theme structure
 shopify theme check
 
-# Preview theme on a Shopify development store
+# Launch local Shopify theme development server
 shopify theme dev --store your-store.myshopify.com
 
-# Push theme to your store
+# Push theme to store
 shopify theme push
 ```
 
 ---
 
-## 🛡️ Enhancements & Bug Fixes Applied
-
-1. **Asset Directory Standardization**: Renamed misspelled folder `Assests/` &rarr; `assets/`, resolving Shopify asset pipeline loading failures.
-2. **Shopify Integration**: Implemented `sections/stylenest-hero.liquid` and `sections/stylenest-catalog.liquid`, integrated `stylenest.css`, and mounted them into `templates/index.json`.
-3. **Shopify CLI Validation**: Added `.shopifyignore` to cleanly isolate prototype files (`Website.*`) from theme uploads.
-4. **FontAwesome CDN Added**: Fixed missing stylesheet link in `Website.html`, restoring footer social icons (Instagram, X, Facebook).
-5. **Product Image & Case Corrections**: 
-   - Replaced mismatched image for LED High Tops (`putting-on-your-shoes.jpg`).
-   - Corrected image reference for Classic Varsity Top (`Classic Varsity Top.jpg`).
-   - Fixed Linux case-sensitivity bug on Classic Leather Jacket (`Classic Leather Jacket.jpg`).
-6. **Cart State Persistence**: Integrated `localStorage` synchronization so user carts persist across page refreshes.
-7. **Checkout Validation**: Added validation checks for UPI IDs and Card details (Number, Expiry, CVV) before confirming orders.
-8. **Modern JavaScript Cleanups**: Replaced deprecated `substr()` with `substring()`.
+## 📄 License
+MIT License. Developed for fashion e-commerce assessment.

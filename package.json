@@ -1,0 +1,25 @@
+{
+  "name": "stylenest-ecommerce",
+  "version": "2.0.0",
+  "description": "StyleNest - Full-Stack Luxury Fashion E-Commerce Platform & Shopify OS 2.0 Theme",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node test/api.test.js"
+  },
+  "keywords": [
+    "ecommerce",
+    "fashion",
+    "full-stack",
+    "express",
+    "shopify"
+  ],
+  "author": "srikanthkondadasula2002-art",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}

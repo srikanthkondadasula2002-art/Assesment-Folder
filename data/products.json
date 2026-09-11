@@ -1,0 +1,520 @@
+[
+  {
+    "id": 1,
+    "handle": "led-high-tops",
+    "name": "LED High Tops",
+    "price": 80,
+    "stock": 24,
+    "description": "Black high top shoes with green LED lights in the sole, tied up with laces and a buckle.",
+    "gender": "men",
+    "image": "assets/putting-on-your-shoes.jpg",
+    "sizes": [
+      "7",
+      "8",
+      "9",
+      "10",
+      "11"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      },
+      {
+        "name": "Green",
+        "hex": "#22c55e"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "handle": "striped-skirt-and-top",
+    "name": "Striped Skirt and Top",
+    "price": 50,
+    "stock": 18,
+    "description": "Black cotton top with matching striped skirt.",
+    "gender": "women",
+    "image": "assets/striped-blouse-fashion.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      },
+      {
+        "name": "White",
+        "hex": "#FFFFFF"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "handle": "red-sports-tee",
+    "name": "Red Sports Tee",
+    "price": 50,
+    "stock": 34,
+    "description": "Women's red sporty t-shirt with colorful details on the sleeves and a small white pocket.",
+    "gender": "women",
+    "image": "assets/Red Sports Tee.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Red",
+        "hex": "#ef4444"
+      },
+      {
+        "name": "White",
+        "hex": "#FFFFFF"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "handle": "blue-silk-tuxedo",
+    "name": "Blue Silk Tuxedo",
+    "price": 70,
+    "stock": 12,
+    "description": "Blue silk tuxedo with marbled aquatic pattern and dark lining. Sleeves are complete with rounded hem and black buttons.",
+    "gender": "men",
+    "image": "assets/Blue Silk Tuxedo.jpg",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Blue",
+        "hex": "#3b82f6"
+      },
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "handle": "olive-green-jacket",
+    "name": "Olive Green Jacket",
+    "price": 65,
+    "stock": 22,
+    "description": "Loose fitting olive green jacket with buttons and large pockets. Multicoloured pattern on the front of the shoulders.",
+    "gender": "women",
+    "image": "assets/urban-fashion.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Olive",
+        "hex": "#6b7f3e"
+      },
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "handle": "white-cotton-shirt",
+    "name": "White Cotton Shirt",
+    "price": 30,
+    "stock": 40,
+    "description": "Plain white cotton long sleeved shirt with loose collar. Small buttons and front pocket.",
+    "gender": "women",
+    "image": "assets/White Cotton Shirt.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "White",
+        "hex": "#FFFFFF"
+      },
+      {
+        "name": "Cream",
+        "hex": "#fef3c7"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "handle": "chequered-red-shirt",
+    "name": "Chequered Red Shirt",
+    "price": 50,
+    "stock": 30,
+    "description": "Classic mens plaid flannel shirt with long sleeves, in chequered style, with two chest pockets.",
+    "gender": "men",
+    "image": "assets/red-plaid-shirt.jpg",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Red",
+        "hex": "#ef4444"
+      },
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "handle": "longsleeve-cotton-top",
+    "name": "Long Sleeve Cotton Top",
+    "price": 50,
+    "stock": 19,
+    "description": "Black cotton womens top, with long sleeves, no collar and a thick hem.",
+    "gender": "women",
+    "image": "assets/Long Sleeve Cotton Top.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      },
+      {
+        "name": "Grey",
+        "hex": "#6b7280"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "handle": "silk-summer-top",
+    "name": "Silk Summer Top",
+    "price": 70,
+    "stock": 16,
+    "description": "Silk womens top with short sleeves and number pattern.",
+    "gender": "women",
+    "image": "assets/Silk Summer Top.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "White",
+        "hex": "#FFFFFF"
+      },
+      {
+        "name": "Pink",
+        "hex": "#ec4899"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "handle": "zipped-jacket",
+    "name": "Zipped Jacket",
+    "price": 65,
+    "stock": 28,
+    "description": "Dark navy and light blue men's zipped waterproof jacket with an outer zipped chestpocket for easy storeage.",
+    "gender": "men",
+    "image": "assets/Zipped Jacket.jpg",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Navy",
+        "hex": "#1e3a5f"
+      },
+      {
+        "name": "Blue",
+        "hex": "#3b82f6"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "handle": "black-leather-bag",
+    "name": "Black Leather Bag",
+    "price": 30,
+    "stock": 45,
+    "description": "Womens black leather bag, with ample space. Can be worn over the shoulder, or remove straps to carry in your hand.",
+    "gender": "women",
+    "image": "assets/Black Leather Bag.jpg",
+    "sizes": [
+      "One Size"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      },
+      {
+        "name": "Brown",
+        "hex": "#92400e"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "handle": "dark-winter-jacket",
+    "name": "Soft Winter Jacket",
+    "price": 50,
+    "stock": 20,
+    "description": "Thick black winter jacket, with soft fleece lining. Perfect for those cold weather days.",
+    "gender": "women",
+    "image": "assets/smiling-woman-on-snowy-afternoon.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      },
+      {
+        "name": "Grey",
+        "hex": "#6b7280"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "handle": "navy-sport-jacket",
+    "name": "Navy Sports Jacket",
+    "price": 60,
+    "stock": 15,
+    "description": "Long-sleeved navy waterproof jacket in thin, polyester fabric with a soft mesh inside.",
+    "gender": "men",
+    "image": "assets/Navy Sports Jacket.jpg",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Navy",
+        "hex": "#1e3a5f"
+      },
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "handle": "dark-denim-top",
+    "name": "Dark Denim Top",
+    "price": 60,
+    "stock": 26,
+    "description": "Classic dark denim top with chest pockets, long sleeves with buttoned cuffs, and a ripped hem effect.",
+    "gender": "women",
+    "image": "assets/Dark Denim Top.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Denim",
+        "hex": "#1e40af"
+      },
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "handle": "classic-leather-jacket",
+    "name": "Classic Leather Jacket",
+    "price": 80,
+    "stock": 14,
+    "description": "Womans zipped leather jacket. Adjustable belt for a comfortable fit, complete with shoulder pads and front zip pocket.",
+    "gender": "women",
+    "image": "assets/Classic Leather Jacket.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      },
+      {
+        "name": "Brown",
+        "hex": "#92400e"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "handle": "striped-silk-blouse",
+    "name": "Striped Silk Blouse",
+    "price": 50,
+    "stock": 31,
+    "description": "Ultra-stylish black and red striped silk blouse with buckle collar and matching button pants.",
+    "gender": "women",
+    "image": "assets/striped-blouse-fashion.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Red",
+        "hex": "#ef4444"
+      },
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "handle": "floral-white-top",
+    "name": "Floral White Top",
+    "price": 75,
+    "stock": 17,
+    "description": "Stylish sleeveless white top with a floral pattern.",
+    "gender": "women",
+    "image": "assets/Floral White Top.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "White",
+        "hex": "#FFFFFF"
+      },
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "handle": "yellow-wool-jumper",
+    "name": "Yellow Wool Jumper",
+    "price": 80,
+    "stock": 21,
+    "description": "Knitted jumper in a soft wool blend with low dropped shoulders and wide sleeves and think cuffs. Perfect for keeping warm during Fall.",
+    "gender": "women",
+    "image": "assets/Yellow Wool Jumper.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Yellow",
+        "hex": "#eab308"
+      },
+      {
+        "name": "Brown",
+        "hex": "#92400e"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "handle": "classic-varsity-top",
+    "name": "Classic Varsity Top",
+    "price": 60,
+    "stock": 27,
+    "description": "Womens casual varsity top, This grey and black buttoned top is a sport-inspired piece complete with an embroidered letter.",
+    "gender": "women",
+    "image": "assets/Classic Varsity Top.jpg",
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "colors": [
+      {
+        "name": "Grey",
+        "hex": "#6b7280"
+      },
+      {
+        "name": "Black",
+        "hex": "#1A1A1A"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "handle": "ocean-blue-shirt",
+    "name": "Ocean Blue Shirt",
+    "price": 50,
+    "stock": 35,
+    "description": "Ocean blue cotton shirt with a narrow collar and buttons down the front and long sleeves. Comfortable fit and tiled kalidoscope patterns.",
+    "gender": "men",
+    "image": "assets/Ocean Blue Shirt.jpg",
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "colors": [
+      {
+        "name": "Blue",
+        "hex": "#3b82f6"
+      },
+      {
+        "name": "White",
+        "hex": "#FFFFFF"
+      }
+    ]
+  }
+]

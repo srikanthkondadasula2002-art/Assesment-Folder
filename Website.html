@@ -26,6 +26,12 @@
         <input type="text" id="searchInput" placeholder="Search products...">
         <button class="search-toggle" id="searchToggle">&#128269;</button>
       </div>
+      <a href="/admin" class="nav-admin-link" title="Store Operations & Admin Dashboard" target="_blank">
+        <span class="badge-admin-nav"><i class="fa-solid fa-shield-halved"></i> Admin</span>
+      </a>
+      <button class="icon-btn" id="myOrdersBtn" title="Track My Orders">
+        <i class="fa-solid fa-box"></i>
+      </button>
       <button class="icon-btn" id="themeToggle" title="Toggle Dark/Light Mode">
         <span id="themeIcon">🌙</span>
       </button>
@@ -193,6 +199,7 @@
       <h2>Shipping Address</h2>
       <div class="checkout-form">
         <input type="text" id="fullName" placeholder="Full Name" required>
+        <input type="email" id="email" placeholder="Email Address" required>
         <input type="text" id="phone" placeholder="Phone Number" required>
         <input type="text" id="address" placeholder="Street Address" required>
         <div class="form-row">
@@ -246,10 +253,27 @@
       <div class="confirmation">
         <div class="confirm-icon">&#10004;</div>
         <h2>Order Confirmed!</h2>
-        <p>Your order has been placed successfully.</p>
+        <p>Your order has been recorded into our database.</p>
         <p class="order-id" id="orderId"></p>
-        <button class="btn-primary" id="continueShopping" style="margin-top:24px">Continue Shopping</button>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap;">
+          <button class="btn-outline" id="viewMyOrdersAfterCheckout">View in My Orders</button>
+          <button class="btn-primary" id="continueShopping">Continue Shopping</button>
+        </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="myOrdersModal">
+  <div class="modal-content orders-modal-content">
+    <button class="modal-close" id="closeMyOrders">&times;</button>
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+      <i class="fa-solid fa-box-open" style="color:var(--primary);font-size:22px;"></i>
+      <h2 style="font-family:var(--font-serif);margin:0;">My Order History</h2>
+    </div>
+    <p style="color:var(--text-muted);font-size:13px;margin-bottom:20px;">Real-time fulfillment tracking powered by StyleNest REST API.</p>
+    <div id="myOrdersList" class="my-orders-list">
+      <div style="text-align:center;padding:30px;color:var(--text-muted);">Loading your orders...</div>
     </div>
   </div>
 </div>

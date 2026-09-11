@@ -515,27 +515,49 @@ starSpans.forEach(function(span) {
 });
 
 if ($('reviewForm')) {
-  $('reviewForm').addEventListener('submit', function(e) {
+  $('reviewForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     if (!currentProduct) return;
     const name = $('reviewerName').value.trim();
     const comment = $('reviewerComment').value.trim();
     if (!name || !comment) return;
 
-    currentProduct.reviews.unshift({
-      name: name,
-      rating: currentRatingInput,
-      date: 'Just now',
-      comment: comment
-    });
-    currentProduct.reviewCount++;
+    // Send review to backend REST API
+    try {
+      const res = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId: currentProduct.id,
+          name: name,
+          rating: currentRatingInput,
+          comment: comment
+        })
+      });
+      const json = await res.json();
+      if (json.success) {
+        if (!currentProduct.reviews) currentProduct.reviews = [];
+        currentProduct.reviews.unshift(json.data);
+        currentProduct.reviewCount = (currentProduct.reviewCount || 0) + 1;
+      }
+    } catch (err) {
+      // Offline fallback
+      currentProduct.reviews.unshift({
+        name: name,
+        rating: currentRatingInput,
+        date: 'Just now',
+        comment: comment
+      });
+      currentProduct.reviewCount++;
+    }
+
     renderReviewsList();
     if ($('detailRatingText')) $('detailRatingText').textContent = currentProduct.rating + ' (' + currentProduct.reviewCount + ' reviews)';
 
     $('reviewerName').value = '';
     $('reviewerComment').value = '';
     $('reviewForm').style.display = 'none';
-    showToast('Review Submitted ⭐', 'Thank you, ' + name + '! Your verified feedback was added.', 'star');
+    showToast('Review Submitted ⭐', 'Thank you, ' + name + '! Your verified feedback was recorded.', 'star');
     renderProducts();
   });
 }
@@ -598,17 +620,44 @@ $('cartBtn').addEventListener('click', openCart);
 $('closeCart').addEventListener('click', closeCart);
 $('cartOverlay').addEventListener('click', closeCart);
 
-// Promo Code Handlers
-function applyPromoCode(code) {
+// Promo Code Handlers (Server-Verified)
+async function applyPromoCode(code) {
   const clean = code.trim().toUpperCase();
   if (!clean) return;
-  const promo = PROMO_CODES[clean];
-  if (!promo) {
-    showToast('Invalid Promo', 'Code "' + clean + '" is invalid. Try STYLENEST20 for 20% off!', 'coupon');
-    return;
+
+  let subtotal = 0;
+  for (let i = 0; i < cart.length; i++) { subtotal += cart[i].product.price * cart[i].qty; }
+
+  try {
+    const res = await fetch('/api/promos/validate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: clean, subtotal: subtotal })
+    });
+    const json = await res.json();
+    if (json.success) {
+      activePromo = {
+        code: json.code,
+        label: json.label,
+        type: 'fixed_discount',
+        calculatedDiscount: json.discount
+      };
+      showToast('Promo Applied! 🏷️', json.label + ' successfully applied to your order', 'coupon');
+    } else {
+      showToast('Invalid Promo', json.message || 'Code is invalid.', 'coupon');
+      return;
+    }
+  } catch (err) {
+    // Offline fallback to local PROMO_CODES
+    const promo = PROMO_CODES[clean];
+    if (!promo) {
+      showToast('Invalid Promo', 'Code "' + clean + '" is invalid. Try STYLENEST20 for 20% off!', 'coupon');
+      return;
+    }
+    activePromo = promo;
+    showToast('Promo Applied! 🏷️', promo.label + ' successfully applied to your order', 'coupon');
   }
-  activePromo = promo;
-  showToast('Promo Applied! 🏷️', promo.label + ' successfully applied to your order', 'coupon');
+
   if ($('cartPromoInput')) $('cartPromoInput').value = '';
   renderCart();
 }
@@ -651,7 +700,9 @@ function renderCart() {
 
   let discount = 0;
   if (activePromo) {
-    if (activePromo.type === 'percent') {
+    if (activePromo.calculatedDiscount !== undefined) {
+      discount = activePromo.calculatedDiscount;
+    } else if (activePromo.type === 'percent') {
       discount = subtotal * activePromo.val;
     } else if (activePromo.type === 'fixed') {
       if (subtotal >= (activePromo.min || 0)) discount = activePromo.val;
@@ -741,12 +792,12 @@ $('checkoutModal').addEventListener('click', function(e) {
 });
 
 $('toPaymentBtn').addEventListener('click', function() {
-  const fields = ['fullName', 'phone', 'address', 'city', 'state', 'pincode'];
+  const fields = ['fullName', 'email', 'phone', 'address', 'city', 'state', 'pincode'];
   let valid = true;
   for (let i = 0; i < fields.length; i++) {
     const el = $(fields[i]);
-    if (!el.value.trim()) {
-      el.style.borderColor = '#ef4444';
+    if (!el || !el.value.trim()) {
+      if (el) el.style.borderColor = '#ef4444';
       valid = false;
     } else {
       el.style.borderColor = '';
@@ -759,7 +810,9 @@ $('toPaymentBtn').addEventListener('click', function() {
 
   let discount = 0;
   if (activePromo) {
-    if (activePromo.type === 'percent') {
+    if (activePromo.calculatedDiscount !== undefined) {
+      discount = activePromo.calculatedDiscount;
+    } else if (activePromo.type === 'percent') {
       discount = subtotal * activePromo.val;
     } else if (activePromo.type === 'fixed') {
       if (subtotal >= (activePromo.min || 0)) discount = activePromo.val;
@@ -792,7 +845,7 @@ for (let i = 0; i < paymentRadios.length; i++) {
   });
 }
 
-$('placeOrderBtn').addEventListener('click', function() {
+$('placeOrderBtn').addEventListener('click', async function() {
   const selectedPayment = document.querySelector('input[name="payment"]:checked');
   if (!selectedPayment) return;
 
@@ -820,21 +873,60 @@ $('placeOrderBtn').addEventListener('click', function() {
     if (!cardValid) return;
   }
 
+  // Submit Order to backend REST API
+  const orderPayload = {
+    customer: {
+      name: $('fullName').value.trim(),
+      email: $('email') ? $('email').value.trim() : 'guest@example.com',
+      address: $('address').value.trim(),
+      city: $('city').value.trim(),
+      postalCode: $('pincode').value.trim()
+    },
+    items: cart.map(function(item) {
+      return {
+        id: item.product.id,
+        name: item.product.name,
+        price: item.product.price,
+        quantity: item.qty,
+        size: item.size,
+        color: item.color,
+        image: item.product.image
+      };
+    }),
+    promoCode: activePromo ? activePromo.code : null,
+    paymentMethod: selectedPayment.value.toUpperCase()
+  };
+
+  let generatedOrderId = 'ORD-' + Math.floor(1000 + Math.random() * 9000);
+
+  try {
+    const res = await fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderPayload)
+    });
+    const json = await res.json();
+    if (json.success && json.data) {
+      generatedOrderId = json.data.id;
+    }
+  } catch (err) {
+    console.warn('Backend offline, using generated local order ID.');
+  }
+
   $('step2').style.display = 'none';
   $('step3').style.display = 'block';
-  const orderId = 'Order #SN' + Math.random().toString(36).substring(2, 10).toUpperCase();
-  $('orderId').textContent = orderId;
+  $('orderId').textContent = 'Order Reference: ' + generatedOrderId;
   cart = [];
   activePromo = null;
   saveCart();
   updateCartBadge();
-  showToast('Order Placed Successfully! 🎉', orderId + ' is confirmed and will ship soon.', 'info');
+  showToast('Order Placed Successfully! 🎉', generatedOrderId + ' is confirmed and stored in database.', 'info');
 });
 
 $('continueShopping').addEventListener('click', function() {
   $('checkoutModal').classList.remove('open');
-  const fields = ['fullName', 'phone', 'address', 'city', 'state', 'pincode'];
-  for (let i = 0; i < fields.length; i++) { $(fields[i]).value = ''; }
+  const fields = ['fullName', 'email', 'phone', 'address', 'city', 'state', 'pincode'];
+  for (let i = 0; i < fields.length; i++) { if ($(fields[i])) $(fields[i]).value = ''; }
   for (let i = 0; i < paymentRadios.length; i++) { paymentRadios[i].checked = false; }
   $('upiField').style.display = 'none';
   $('cardFields').style.display = 'none';
@@ -842,10 +934,96 @@ $('continueShopping').addEventListener('click', function() {
   $('placeOrderBtn').textContent = 'Select a payment method';
 });
 
+if ($('viewMyOrdersAfterCheckout')) {
+  $('viewMyOrdersAfterCheckout').addEventListener('click', function() {
+    $('checkoutModal').classList.remove('open');
+    openMyOrders();
+  });
+}
+
 // ==========================================
-// 8. Application Initialization
+// 8. Orders History Modal & Tracking
 // ==========================================
+async function openMyOrders() {
+  const modal = $('myOrdersModal');
+  const list = $('myOrdersList');
+  if (!modal || !list) return;
+
+  modal.classList.add('open');
+  list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted);"><i class="fa-solid fa-spinner fa-spin" style="font-size:24px;margin-bottom:10px;display:block;"></i> Fetching your orders from database...</div>';
+
+  try {
+    const res = await fetch('/api/orders');
+    const json = await res.json();
+    if (json.success && json.data && json.data.length) {
+      list.innerHTML = json.data.map(function(order) {
+        const dateStr = new Date(order.createdAt).toLocaleDateString() + ' at ' + new Date(order.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        const itemsHtml = order.items.map(function(it) {
+          return '<div class="order-card-item">' +
+            '<span>' + it.quantity + 'x ' + it.name + ' (' + it.size + ', ' + it.color + ')</span>' +
+            '<span>$' + (it.price * it.quantity).toFixed(2) + '</span>' +
+          '</div>';
+        }).join('');
+
+        const statusClass = 'status-' + order.status.toLowerCase();
+
+        return '<div class="order-card">' +
+          '<div class="order-card-header">' +
+            '<div>' +
+              '<span class="order-card-id">' + order.id + '</span>' +
+              '<div class="order-card-date">' + dateStr + ' &middot; ' + (order.paymentMethod || 'Card') + '</div>' +
+            '</div>' +
+            '<span class="order-status-badge ' + statusClass + '">' + order.status + '</span>' +
+          '</div>' +
+          '<div class="order-card-items">' + itemsHtml + '</div>' +
+          '<div class="order-card-footer">' +
+            '<span>Total Amount:</span>' +
+            '<span style="color:var(--primary);font-size:16px;">$' + order.total.toFixed(2) + (order.promoCode ? ' (' + order.promoCode + ')' : '') + '</span>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    } else {
+      list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted);"><i class="fa-solid fa-box" style="font-size:32px;margin-bottom:12px;opacity:0.4;display:block;"></i>No past orders recorded yet. Place an order to start tracking!</div>';
+    }
+  } catch (err) {
+    list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-muted);">Unable to load orders at this time.</div>';
+  }
+}
+
+function closeMyOrders() {
+  const modal = $('myOrdersModal');
+  if (modal) modal.classList.remove('open');
+}
+
+if ($('myOrdersBtn')) $('myOrdersBtn').addEventListener('click', openMyOrders);
+if ($('closeMyOrders')) $('closeMyOrders').addEventListener('click', closeMyOrders);
+if ($('myOrdersModal')) {
+  $('myOrdersModal').addEventListener('click', function(e) {
+    if (e.target === $('myOrdersModal')) closeMyOrders();
+  });
+}
+
+// ==========================================
+// 9. Application Initialization & REST Loader
+// ==========================================
+async function fetchProductsFromAPI() {
+  try {
+    const res = await fetch('/api/products');
+    const json = await res.json();
+    if (json.success && json.data && json.data.length) {
+      // update products with live catalog & stock
+      products.length = 0;
+      json.data.forEach(function(p) { products.push(p); });
+      renderProducts();
+    }
+  } catch (err) {
+    console.log('Using preloaded catalog data.');
+  }
+}
+
 applyTheme(currentTheme);
 loadWishlist();
 loadCart();
 renderProducts();
+fetchProductsFromAPI();
+

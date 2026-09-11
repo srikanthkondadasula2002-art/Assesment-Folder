@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ORD-9279",
+    "createdAt": "2026-09-11T19:55:28.799Z",
+    "customer": {
+      "name": "Jane Doe",
+      "email": "jane.doe@example.com",
+      "address": "100 Fashion Boulevard",
+      "city": "New York",
+      "postalCode": "10001"
+    },
+    "items": [
+      {
+        "id": 1,
+        "name": "LED High Tops",
+        "price": 80,
+        "quantity": 1,
+        "size": "9",
+        "color": "Black",
+        "image": "assets/putting-on-your-shoes.jpg"
+      }
+    ],
+    "subtotal": 80,
+    "discount": 16,
+    "promoCode": "STYLENEST20",
+    "total": 64,
+    "paymentMethod": "CREDIT CARD",
+    "status": "Shipped"
+  },
+  {
+    "id": "ORD-9842",
+    "createdAt": "2026-03-10T14:23:10.000Z",
+    "customer": {
+      "name": "Marcus Vance",
+      "email": "marcus.v@example.com",
+      "address": "742 Evergreen Terrace",
+      "city": "Springfield",
+      "postalCode": "97477"
+    },
+    "items": [
+      {
+        "id": 1,
+        "name": "LED High Tops",
+        "price": 80,
+        "quantity": 1,
+        "size": "10",
+        "color": "Black"
+      },
+      {
+        "id": 4,
+        "name": "Blue Silk Tuxedo",
+        "price": 70,
+        "quantity": 1,
+        "size": "L",
+        "color": "Blue"
+      }
+    ],
+    "subtotal": 150,
+    "discount": 30,
+    "promoCode": "STYLENEST20",
+    "total": 120,
+    "paymentMethod": "Credit Card (ending in 4242)",
+    "status": "Delivered"
+  },
+  {
+    "id": "ORD-9843",
+    "createdAt": "2026-03-11T09:12:44.000Z",
+    "customer": {
+      "name": "Chloe Dupont",
+      "email": "chloe.d@example.com",
+      "address": "12 Avenue Montaigne",
+      "city": "Paris",
+      "postalCode": "75008"
+    },
+    "items": [
+      {
+        "id": 15,
+        "name": "Classic Leather Jacket",
+        "price": 80,
+        "quantity": 1,
+        "size": "M",
+        "color": "Black"
+      }
+    ],
+    "subtotal": 80,
+    "discount": 10,
+    "promoCode": "SAVE10",
+    "total": 70,
+    "paymentMethod": "PayPal",
+    "status": "Shipped"
+  }
+]
