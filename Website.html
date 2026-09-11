@@ -6,6 +6,7 @@
   <title>StyleNest - Premium Fashion Store</title>
   <meta name="description" content="StyleNest - Discover curated collections of premium fashion essentials for men and women.">
   <link rel="stylesheet" href="Website.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
@@ -25,7 +26,14 @@
         <input type="text" id="searchInput" placeholder="Search products...">
         <button class="search-toggle" id="searchToggle">&#128269;</button>
       </div>
-      <button class="icon-btn" id="cartBtn">
+      <button class="icon-btn" id="themeToggle" title="Toggle Dark/Light Mode">
+        <span id="themeIcon">🌙</span>
+      </button>
+      <button class="icon-btn" id="wishlistBtn" title="My Wishlist">
+        &#9825;
+        <span class="cart-badge" id="wishlistBadge">0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" title="Shopping Cart">
         &#128722;
         <span class="cart-badge" id="cartBadge">0</span>
       </button>
@@ -87,6 +95,11 @@
           <span class="original-price" id="detailOriginal"></span>
           <span class="discount-badge" id="detailDiscount"></span>
         </div>
+        <div class="detail-rating-row">
+          <span class="detail-stars" id="detailStars">★★★★★</span>
+          <span class="detail-rating-text" id="detailRatingText">4.9 (84 reviews)</span>
+          <span class="stock-badge" id="detailStockBadge">⚡ In Stock</span>
+        </div>
         <p class="detail-desc" id="detailDesc"></p>
         <div class="detail-section">
           <h4>Size</h4>
@@ -105,6 +118,26 @@
           </div>
         </div>
         <button class="btn-primary add-to-cart-btn" id="addToCartBtn" disabled>Select size & color first</button>
+
+        <div class="reviews-container">
+          <div class="reviews-header">
+            <h4>Verified Customer Reviews</h4>
+            <button class="btn-outline write-review-btn" id="toggleReviewFormBtn">+ Write Review</button>
+          </div>
+          <form class="review-form" id="reviewForm" style="display:none;">
+            <div class="rating-input-stars" id="ratingInputStars">
+              <span data-star="1" class="active">★</span>
+              <span data-star="2" class="active">★</span>
+              <span data-star="3" class="active">★</span>
+              <span data-star="4" class="active">★</span>
+              <span data-star="5" class="active">★</span>
+            </div>
+            <input type="text" id="reviewerName" placeholder="Your Name" required>
+            <textarea id="reviewerComment" placeholder="Share your thoughts on quality, sizing, and comfort..." rows="3" required></textarea>
+            <button type="submit" class="btn-primary" style="padding:8px 16px;font-size:0.85rem;margin-top:8px">Submit Review</button>
+          </form>
+          <div class="review-list" id="reviewList"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -119,12 +152,36 @@
   </div>
   <div class="cart-items" id="cartItems"></div>
   <div class="cart-footer" id="cartFooter" style="display:none;">
+    <div class="promo-box">
+      <input type="text" id="cartPromoInput" placeholder="Promo code (e.g. STYLENEST20)">
+      <button id="applyPromoBtn">Apply</button>
+    </div>
+    <div id="activePromoContainer" class="active-promo-tag" style="display:none;">
+      <span id="activePromoLabel"></span>
+      <button id="removePromoBtn">&times;</button>
+    </div>
+    <div class="cart-summary-lines">
+      <div class="summary-line"><span>Subtotal</span><span id="cartSubtotal">$0.00</span></div>
+      <div class="summary-line discount-line" id="cartDiscountRow" style="display:none;">
+        <span>Discount (<span id="cartDiscountLabel"></span>)</span>
+        <span id="cartDiscountAmount" class="discount-val">-$0.00</span>
+      </div>
+    </div>
     <div class="cart-total">
       <span>Total</span>
       <span id="cartTotal">$0.00</span>
     </div>
     <button class="btn-primary" id="checkoutBtn" style="width:100%">Proceed to Checkout</button>
   </div>
+</div>
+
+<div class="cart-overlay" id="wishlistOverlay"></div>
+<div class="cart-panel" id="wishlistPanel">
+  <div class="cart-header">
+    <h3>My Wishlist (<span id="wishlistHeaderCount">0</span>)</h3>
+    <button class="modal-close" id="closeWishlist">&times;</button>
+  </div>
+  <div class="cart-items" id="wishlistItems"></div>
 </div>
 
 
@@ -175,6 +232,10 @@
       </div>
       <div class="checkout-summary">
         <div><span>Subtotal</span><span id="checkoutSubtotal">$0</span></div>
+        <div id="checkoutDiscountRow" style="display:none;color:var(--primary);font-weight:600;">
+          <span>Discount (<span id="checkoutDiscountLabel"></span>)</span>
+          <span id="checkoutDiscountAmount">-$0</span>
+        </div>
         <div><span>Shipping</span><span>Free</span></div>
         <div class="summary-total"><span>Total</span><span id="checkoutTotal">$0</span></div>
       </div>
@@ -239,6 +300,8 @@
   </div>
   <div class="footer-bottom">&copy; 2026 StyleNest. All rights reserved.</div>
 </footer>
+
+<div class="toast-container" id="toastContainer"></div>
 
 <script src="Website.js"></script>
 </body>

@@ -1,0 +1,162 @@
+{{ 'stylenest.css' | asset_url | stylesheet_tag }}
+
+<section class="stylenest-catalog" id="catalog">
+  <div class="stylenest-catalog-header">
+    <h2>{{ section.settings.title | default: 'Featured Products' }}</h2>
+    <p>{{ section.settings.subtitle | default: 'Curated styles for the modern wardrobe' }}</p>
+  </div>
+
+  <div class="stylenest-filters">
+    <button class="stylenest-filter-btn active" data-filter="all">All</button>
+    <button class="stylenest-filter-btn" data-filter="men">👔 Men</button>
+    <button class="stylenest-filter-btn" data-filter="women">👗 Women</button>
+  </div>
+
+  <div class="stylenest-product-grid" id="stylenestProductGrid">
+    {% assign selected_collection = collections[section.settings.collection] %}
+    {% if selected_collection == blank or selected_collection.products_count == 0 %}
+      {% assign selected_collection = collections.all %}
+    {% endif %}
+
+    {% if selected_collection.products_count > 0 %}
+      {% for product in selected_collection.products limit: section.settings.products_to_show %}
+        {% assign p_gender = 'all' %}
+        {% for tag in product.tags %}
+          {% assign tag_lower = tag | downcase %}
+          {% if tag_lower contains 'men' %}
+            {% assign p_gender = 'men' %}
+          {% elsif tag_lower contains 'women' %}
+            {% assign p_gender = 'women' %}
+          {% endif %}
+        {% endfor %}
+
+        <div class="stylenest-product-card" data-gender="{{ p_gender }}">
+          <div class="stylenest-card-img-wrap">
+            <button type="button" class="wishlist-card-btn" title="Wishlist">♡</button>
+            {% if product.featured_image %}
+              <img
+                class="stylenest-card-img"
+                src="{{ product.featured_image | image_url: width: 600 }}"
+                alt="{{ product.title | escape }}"
+                loading="lazy"
+                width="600"
+                height="800"
+              >
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'stylenest-card-img' }}
+            {% endif %}
+            <a href="{{ product.url }}" class="stylenest-quick-view">View Product</a>
+          </div>
+          <div class="stylenest-card-body">
+            <span class="stylenest-card-category">{{ product.type | default: product.vendor | default: 'StyleNest' }}</span>
+            <div class="card-rating"><span>★</span><span>4.9</span><span class="card-rating-count">(68)</span></div>
+            <h3 class="stylenest-card-name">{{ product.title }}</h3>
+            <div class="stylenest-card-price">
+              <span class="current">{{ product.price | money }}</span>
+              {% if product.compare_at_price > product.price %}
+                <span class="original">{{ product.compare_at_price | money }}</span>
+                <span class="sale-tag">Sale</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      {% comment %} Sample Catalog Fallback {% endcomment %}
+      {% assign sample_items = "LED High Tops|80.00|putting-on-your-shoes.jpg|men,Striped Skirt and Top|50.00|striped-blouse-fashion.jpg|women,Red Sports Tee|50.00|Red Sports Tee.jpg|women,Blue Silk Tuxedo|70.00|Blue Silk Tuxedo.jpg|men,Olive Green Jacket|65.00|urban-fashion.jpg|women,White Cotton Shirt|30.00|White Cotton Shirt.jpg|women,Chequered Red Shirt|50.00|red-plaid-shirt.jpg|men,Long Sleeve Cotton Top|50.00|Long Sleeve Cotton Top.jpg|women" | split: "," %}
+      {% for item in sample_items %}
+        {% assign parts = item | split: "|" %}
+        {% assign title = parts[0] %}
+        {% assign price = parts[1] %}
+        {% assign img = parts[2] %}
+        {% assign gender = parts[3] %}
+        <div class="stylenest-product-card" data-gender="{{ gender }}">
+          <div class="stylenest-card-img-wrap">
+            <button type="button" class="wishlist-card-btn" title="Wishlist">♡</button>
+            <img
+              class="stylenest-card-img"
+              src="{{ img | asset_url }}"
+              alt="{{ title | escape }}"
+              loading="lazy"
+              width="600"
+              height="800"
+            >
+            <button type="button" class="stylenest-quick-view">Quick View</button>
+          </div>
+          <div class="stylenest-card-body">
+            <span class="stylenest-card-category">{{ gender | capitalize }}</span>
+            <div class="card-rating"><span>★</span><span>4.8</span><span class="card-rating-count">(54)</span></div>
+            <h3 class="stylenest-card-name">{{ title }}</h3>
+            <div class="stylenest-card-price">
+              <span class="current">${{ price }}</span>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterBtns = document.querySelectorAll('.stylenest-filter-btn');
+    const cards = document.querySelectorAll('.stylenest-product-card');
+
+    filterBtns.forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        filterBtns.forEach(function(b) { b.classList.remove('active'); });
+        this.classList.add('active');
+        const filter = this.dataset.filter;
+
+        cards.forEach(function(card) {
+          if (filter === 'all' || card.dataset.gender === filter || card.dataset.gender === 'all') {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "StyleNest Product Catalog",
+  "tag": "section",
+  "class": "section-stylenest-catalog",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Featured Products"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Curated styles for the modern wardrobe"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "default": 12,
+      "label": "Products to show"
+    }
+  ],
+  "presets": [
+    {
+      "name": "StyleNest Product Catalog"
+    }
+  ]
+}
+{% endschema %}

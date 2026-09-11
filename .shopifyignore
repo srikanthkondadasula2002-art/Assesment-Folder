@@ -1,0 +1,7 @@
+# Files to ignore when using Shopify CLI or deploying theme
+Website.html
+Website.css
+Website.js
+README.md
+.git*
+.github/

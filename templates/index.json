@@ -281,9 +281,32 @@
         "padding-block-start": 48,
         "padding-block-end": 48
       }
+    },
+    "stylenest_hero": {
+      "type": "stylenest-hero",
+      "settings": {
+        "tag": "🔥 Trending Now",
+        "heading": "Elevate Your Style",
+        "subheading": "Discover curated collections of premium fashion essentials.",
+        "button_1_label": "Shop Now",
+        "button_1_link": "#catalog",
+        "button_2_label": "View Collection",
+        "button_2_link": "#catalog"
+      }
+    },
+    "stylenest_catalog": {
+      "type": "stylenest-catalog",
+      "settings": {
+        "title": "Featured Products",
+        "subtitle": "Curated styles for the modern wardrobe",
+        "collection": "all",
+        "products_to_show": 12
+      }
     }
   },
   "order": [
+    "stylenest_hero",
+    "stylenest_catalog",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
