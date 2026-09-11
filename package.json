@@ -1,25 +1,27 @@
 {
-  "name": "stylenest-ecommerce",
-  "version": "2.0.0",
-  "description": "StyleNest - Full-Stack Luxury Fashion E-Commerce Platform & Shopify OS 2.0 Theme",
-  "main": "server.js",
+  "name": "flipkart-clone-mern",
+  "version": "1.0.0",
+  "description": "Full-Stack Pixel-Perfect Flipkart Clone - React (Vite, Redux Toolkit, Tailwind CSS) & Node.js/Express/MongoDB",
+  "main": "server/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js",
-    "test": "node test/api.test.js"
+    "start": "cd server && npm start",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "build:client": "cd client && npm run build",
+    "test:server": "cd server && npm test",
+    "test": "npm run test:server"
   },
   "keywords": [
     "ecommerce",
-    "fashion",
-    "full-stack",
+    "flipkart-clone",
+    "mern-stack",
+    "react",
+    "redux-toolkit",
+    "tailwind",
+    "nodejs",
     "express",
-    "shopify"
+    "mongodb"
   ],
   "author": "srikanthkondadasula2002-art",
-  "license": "MIT",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2"
-  }
+  "license": "MIT"
 }
