@@ -50,12 +50,15 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log('========================================================');
-  console.log(`  🚀 Flipkart MERN Server Running on Port ${PORT}`);
-  console.log(`  📡 API Root:     http://localhost:${PORT}/api/v1`);
-  console.log(`  🩺 Health Check: http://localhost:${PORT}/api/health`);
-  console.log('========================================================');
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log('========================================================');
+    console.log(`  🚀 Flipkart MERN Server Running on Port ${PORT}`);
+    console.log(`  📡 API Root:     http://localhost:${PORT}/api/v1`);
+    console.log(`  🩺 Health Check: http://localhost:${PORT}/api/health`);
+    console.log('========================================================');
+  });
+}
 
 module.exports = app;
+
